@@ -1,0 +1,4 @@
+github.com/pkujhd/goloader v0.0.21-0.20250221081528-a694362394ca h1:MP0NHFEqe79voeMOVWfyQUwoF2ZwHBT81EyIK2Jxeew=
+github.com/pkujhd/goloader v0.0.21-0.20250221081528-a694362394ca/go.mod h1:NBZlcY477N1nyopY6p3YcoiL5dtXHzj/F12F8b3ui/o=
+golang.org/x/mod v0.20.0 h1:utOm6MM3R3dnawAiJgn0y+xvuYRsm1RKM/4giyfDgV0=
+golang.org/x/mod v0.20.0/go.mod h1:hTbmBsO62+eylJbnUtE2MGJUyE7QWk4xUqPFrRgJ+7c=
