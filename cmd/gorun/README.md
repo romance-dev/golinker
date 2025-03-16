@@ -19,7 +19,7 @@ It also automatically adds these flags:
 
 ## How to use
 
-1. You can use it like the official `go run` command. It will pass environment variables and command line arguments to the newly built executable before running it. It will then delete the executable automatically.
-2. You can also pass `-go {{ go version }}` flag to run it under an [older version of Go](https://go.dev/doc/manage-install). `-go 1.23.5` will compile it using the `go 1.23.5` compiler.
+1. You can use it like the official `go run` command but instead use `gorun`. It will pass environment variables and command line arguments to the newly built executable before running it. It will then delete the executable automatically.
+2. You can also pass `-go {{ go version }}` flag to run it under an [older version of Go](https://go.dev/doc/manage-install). `-go 1.23.5` will compile your application using the `go 1.23.5` compiler.
 3. Alternatively, you can copy the executable file and rename it: `gorun` **=>** `gorun1.23.5`.
 4. When building using an older version of Go, make sure the `go.mod` file supports that version. Otherwise it will silently use the latest version.
