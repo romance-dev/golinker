@@ -15,7 +15,7 @@ It also automatically adds these flags:
 ## How to install
 
 1. Run `go install`. This will place it in `$GOPATH/bin` directory.
-2. Configure `$GOPATH/bin` as an [$PATH environment variable](https://en.wikipedia.org/wiki/PATH_(variable)) so you can run `gorun` from anywhere.
+2. Configure `$GOPATH/bin` as a [$PATH environment variable](https://en.wikipedia.org/wiki/PATH_(variable)) so you can run `gorun` from anywhere.
 
 ## How to use
 
