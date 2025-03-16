@@ -16,6 +16,7 @@ It also automatically adds these flags:
 
 1. Run `go install`. This will place it in `$GOPATH/bin` directory.
 2. Configure `$GOPATH/bin` as a [$PATH environment variable](https://en.wikipedia.org/wiki/PATH_(variable)) so you can run `gorun` from anywhere.
+3. On macOS, `echo 'export PATH=$(go env GOPATH)/bin:$PATH' >> ~/.zshrc` (restarting terminal required)
 
 ## How to use
 
