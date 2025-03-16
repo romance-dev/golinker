@@ -5,12 +5,11 @@ import (
 	l "log"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"regexp"
 	"runtime"
 	"strings"
-	
-	"os/signal"
 	"syscall"
 
 	"github.com/romance_dev/golinker/cmd/misc"
@@ -52,7 +51,7 @@ func main() {
 		"-C":       {}, // dir
 		"-modfile": {}, // file
 		"-overlay": {}, // file
-		"-pgo":     {}, //file
+		"-pgo":     {}, // file
 		"-pkgdir":  {}, // dir
 		"-o":       {}, // dir
 	}
@@ -161,6 +160,24 @@ func main() {
 	}
 	args = append([]string{"-ldflags=-checklinkname=0"}, args...) // prepend
 
+	// https://emretanriverdi.medium.com/graceful-shutdown-in-go-c106fe1a99d9
+	// https://itsfoss.com/linux-exit-codes/
+	// https://learn.microsoft.com/en-us/cpp/c-runtime-library/signal-constants?view=msvc-170
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		sig := <-c
+		switch sig {
+		case os.Interrupt:
+			cleanup()
+			os.Exit(130)
+		case syscall.SIGTERM:
+			cleanup()
+			os.Exit(143)
+		}
+	}()
+
 	outputPath := "run" // Determine this based on go.mod?
 	if runtime.GOOS == "windows" {
 		outputPath = outputPath + ".exe"
@@ -173,24 +190,6 @@ func main() {
 		log.Fatalf("could not build: %s", err.Error())
 		return
 	}
-
-	// https://emretanriverdi.medium.com/graceful-shutdown-in-go-c106fe1a99d9
-	// https://itsfoss.com/linux-exit-codes/
-	// https://learn.microsoft.com/en-us/cpp/c-runtime-library/signal-constants?view=msvc-170
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-
-	go func() {
-	    sig := <-c
-	    switch sig {
-	    case os.Interrupt:
-	        cleanup()
-	        os.Exit(130)
-	    case syscall.SIGTERM:
-	        cleanup()
-	        os.Exit(143)
-	    }
-	}()
 
 	// Run the built executable
 	cmd := exec.Command(outputPath, appArgs...)

@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"time"
 	"os"
 	"os/signal"
-	"syscall"
 	"runtime"
+	"syscall"
+	"time"
 )
 
 func main() {
@@ -16,16 +16,16 @@ func main() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
-        sig := <-c
-        switch sig {
-        case os.Interrupt:
-            fmt.Println("sample: SIGINT")
-            os.Exit(130)
-        case syscall.SIGTERM:
-            fmt.Println("sample: SIGTERM")
-            os.Exit(143)
-        }
-    }()
+		sig := <-c
+		switch sig {
+		case os.Interrupt:
+			fmt.Println("sample: SIGINT")
+			os.Exit(130)
+		case syscall.SIGTERM:
+			fmt.Println("sample: SIGTERM")
+			os.Exit(143)
+		}
+	}()
 
 	rand.Seed(time.Now().UnixNano())
 
