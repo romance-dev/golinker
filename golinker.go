@@ -6,7 +6,6 @@ import (
 	"os"
 	"runtime"
 	"strings"
-	"sync"
 	"unsafe"
 
 	"github.com/pkujhd/goloader"
@@ -19,8 +18,8 @@ type toLoadObj struct {
 	pkgName string
 }
 
-var toLoad = []toLoadObj{} // pending objects that need to be loaded
-var toRemove = []string{}  // delete out these files when application terminates
+var toLoad = []toLoadObj{} // pending object files that need to be loaded
+var toRemove = []string{}  // delete out these files after loading
 
 var symPtr = make(map[string]uintptr)
 
@@ -40,7 +39,7 @@ func cleanup() {
 
 // LoadObject loads an object file to be processed by the linker.
 // fullPackageName must include the module name at the start.
-// object can be a path to an existing object file or the raw data to an object file.
+// object can be a path to an existing object file or the raw data of an object file.
 func LoadObject(fullPackageName string, object any) {
 	switch pkg := object.(type) {
 	case string:
@@ -68,32 +67,6 @@ func LoadObject(fullPackageName string, object any) {
 	default:
 		_ = object.(string)
 	}
-}
-
-var onceLinker = sync.OnceValue(func() *goloader.Linker {
-	defer cleanup()
-	fileLocs := []string{}
-	pkgNames := []string{}
-
-	for _, v := range toLoad {
-		fileLocs = append(fileLocs, v.objpath)
-		pkgNames = append(pkgNames, v.pkgName)
-	}
-	toLoad = []toLoadObj{}
-
-	linker, err := goloader.ReadObjs(fileLocs, pkgNames)
-	if err != nil {
-		panic(pkgname + ": Link error: " + err.Error())
-	}
-
-	goModFile = goModLocation()
-	return linker
-})
-
-// Linker returns the Linker. It will lazy-load a Linker
-// and always return the same one.
-func Linker() *goloader.Linker {
-	return onceLinker()
 }
 
 func RegTypes(typs ...any) {

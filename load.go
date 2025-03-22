@@ -29,7 +29,7 @@ type Var struct {
 // CodeModule. The CodeModule must not be unloaded unless you know that you will
 // never use the package again. The CodeModule is derived from the Linker.
 //
-// ptrs represents package-level variables which will be initialized to reference
+// ptrs represents package-level variables which will be initialized to point
 // to the equivalent variable in the "backing-package".
 func Load(fullPackageName string, pattern string, ptrs ...Var) func() *CodeModule {
 	var (
@@ -46,7 +46,7 @@ func Load(fullPackageName string, pattern string, ptrs ...Var) func() *CodeModul
 			}
 		}()
 		result = func() *CodeModule {
-			codeModule, err := goloader.Load(Linker(), symPtr)
+			codeModule, err := goloader.Load(Linker()(), symPtr)
 			if err != nil {
 				panic(pkgname + ": Load error: " + err.Error())
 			}
