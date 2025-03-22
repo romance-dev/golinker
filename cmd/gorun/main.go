@@ -12,7 +12,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/romance_dev/golinker/cmd/misc"
+	"github.com/romance-dev/golinker/cmd/misc"
 )
 
 var Version string = "1.0.0"

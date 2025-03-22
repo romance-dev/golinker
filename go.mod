@@ -1,4 +1,4 @@
-module github.com/romance_dev/golinker
+module github.com/romance-dev/golinker
 
 go 1.18.0
 
