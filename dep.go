@@ -9,7 +9,13 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"fmt"
 )
+
+func CheckDeps(imports ...string) {
+	return
+}
 
 func stackTrace() []byte {
 	buf := make([]byte, 1024)
@@ -48,6 +54,8 @@ func isGoRun() bool {
 	return goRun
 }
 
+
+
 var goModFile *modfile.File
 
 func goModLocation() *modfile.File {
@@ -57,12 +65,14 @@ func goModLocation() *modfile.File {
 
 	scanner := bufio.NewScanner(bytes.NewReader(stackTrace()))
 
-	// Look for main.main() in stack trace
+	// Look for main.main() in stack trace.
+	// TODO: Replace with recursive version
 	foundMain := false
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
+		fmt.Println(line)
 		if foundMain {
-			dir := filepath.Dir(line)
+			dir := filepath.Dir(line) // Clean out :9 +0x17 suffix
 			// Check if directory is git managed
 			if _, err := os.Stat(filepath.Join(dir, ".git")); errors.Is(err, os.ErrNotExist) {
 				_parent := filepath.Dir(dir)

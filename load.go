@@ -46,7 +46,7 @@ func Load(fullPackageName string, pattern string, ptrs ...Var) func() *CodeModul
 			}
 		}()
 		result = func() *CodeModule {
-			codeModule, err := goloader.Load(Linker()(), symPtr)
+			codeModule, err := goloader.Load(linker(), symPtr)
 			if err != nil {
 				panic(pkgname + ": Load error: " + err.Error())
 			}

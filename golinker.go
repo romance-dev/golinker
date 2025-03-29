@@ -70,7 +70,9 @@ func LoadObject(fullPackageName string, object any) {
 }
 
 func RegTypes(typs ...any) {
-	goloader.RegTypes(symPtr, typs...)
+	if len(typs) > 0 {
+		goloader.RegTypes(symPtr, typs...)
+	}
 }
 
 func RegSymbolWithPath(path string) {
