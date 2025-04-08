@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/fatih/color v1.18.0
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/pkujhd/goloader v0.0.21-0.20250221081528-a694362394ca
+	github.com/pkujhd/goloader v0.0.21-0.20250407074302-906f0cf5d398
 	golang.org/x/mod v0.20.0
 )
 
@@ -19,6 +19,7 @@ require (
 retract (
 	v1.0.1
 	v1.0.0
+	v0.0.14
 	v0.0.13
 	v0.0.12
 	v0.0.11
